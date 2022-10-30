@@ -440,7 +440,7 @@ def InitialConditionConstructor(param, mesh, X, x, p_old, u_old):
 
 if __name__ == "__main__":
 
-	Common_main.main(sys.argv[1:], cwd, '/../physics/NS')
+	Common_main.main(sys.argv[1:], cwd, '/../physics')
 
 	if (MPI.comm_world.Get_rank() == 0):
 		print("Problem Solved!")
