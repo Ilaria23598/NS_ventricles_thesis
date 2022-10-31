@@ -6,7 +6,7 @@ from collections import namedtuple
 from pyrameters import PRM
 
 cwd = os.getcwd()
-sys.path.append(cwd + '/../../utilities/')
+sys.path.append(cwd + '/../utilities/')
 
 import ParameterFile_handler as pfh
 
