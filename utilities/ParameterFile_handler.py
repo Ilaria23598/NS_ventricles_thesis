@@ -94,7 +94,6 @@ def readprmfile(filename):
 
 	if filename.endswith(".prm"):
 		with open(filename, 'r') as fileprm:
-			
-			prm= PRM(fileprm.read())
+			prm = PRM(fileprm.read())
 
 	return prm
