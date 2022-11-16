@@ -1,0 +1,185 @@
+# Listing of Parameters
+
+subsection Boundary Conditions
+  # Set the Column Name where is stored the BCs in the .csv file (associated to a column time)
+  set File Column Name Skull BCs  = u_skull
+
+  # Set the Column Name where is stored the BCs in the .csv file (associated to a column time)
+  set File Column Name Skull BCs (x-component) = ux_skull
+
+  # Set the Column Name where is stored the BCs in the .csv file (associated to a column time)
+  set File Column Name Ventricles BCs  = u_vent
+
+  # Type of Input for the imposition of Boundary Condition imposed on the Skull Surface: Constant/File/Expression
+  set Input for Skull BCs = Constant
+
+  # Type of Input for the imposition of Boundary Condition on the Ventricular Surface: Constant/File/Expression
+  set Input for Ventricles BCs = Constant
+
+  # Type of Boundary Condition imposed on the Skull Surface: Dirichlet/Neumann
+  set Skull BCs = Neumann
+
+  # Boundary Condition value to be imposed [m]
+  set Skull Dirichlet BCs Value = 0
+
+  # Type of Boundary Condition imposed on the Ventricular Surface: Dirichlet/Neumann
+  set Ventricles BCs = Neumann
+
+end
+
+subsection Convergence Test
+  # Exact solution of the test problem
+  set Exact Solution Pressure = -0.25*(cos(2*x[1])+cos(2*x[0])+cos(2*x[2]))*sin(2*t)*sin(2*t)
+
+  # Exact solution of the test problem
+  set Exact Solution Velocity x = cos(x[0])*sin(x[1])*sin(x[2])*sin(2*t)
+  # Exact solution of the test problem
+  set Exact Solution Velocity y = cos(x[1])*sin(x[0])*sin(x[2])*sin(2*t)
+
+  # Exact solution of the test problem
+  set Exact Solution Velocity z = -2*sin(x[0])*sin(x[1])*cos(x[2])*sin(2*t)
+
+end
+
+subsection Domain Definition
+  # Set the name of the function containing the boundary ID
+  set Boundary ID Function Name = boundaries
+
+  # Set the value of boundary ID of ventricles
+  set ID for inflow = 1
+
+  # Set the value of boundary ID of ventricles
+  set ID for ventricles = 2
+
+  # Set the name of the function containing the subdomain ID
+  set Subdomain ID Function Name = subdomains
+
+  # Decide the type of mesh to use in your simulation: File/Built-in
+  set Type of Mesh = Built-in
+
+
+  subsection Built-in Mesh
+    # Decide the type of geometrical built-in object: Cube/Sphere/Square/Square1
+    set Geometry Type = Cube
+
+    # Refinement value of the mesh
+    set Mesh Refinement = 2
+
+
+    subsection Cubic Mesh
+      # Length of the external cube edge [m]
+      set External Edge Length = 0.1
+
+      # Length of the internal cube edge [m]
+      set Internal Edge Length = 0.01
+
+    end
+
+    subsection Spherical Mesh
+      # Length of the external sphere radius [m]
+      set External Radius = 0.1
+
+      # Length of the internal sphere radius [m]
+      set Internal Radius = 0.01
+
+    end
+  end
+
+  subsection Mesh from File
+    # Name of the file containing the mesh. Possible extensions: .h5
+    set File Name = ...
+
+  end
+end
+
+subsection Linear Solver
+  # Choice of iterative solver type. The available options are: 
+  #   gmres - cg - minres - tfqmr - richardson - bicgstab - nash - stcg
+  set Iterative Solver = ...
+
+  # Choice of preconditioner type. The available options are: 
+  #   ilu - icc - jacobi - bjacobi - sor - additive_schwarz - petsc_amg - hypre_amg - 
+  #   hypre_euclid - hypre_parasails - amg - ml_amg - none
+  set Preconditioner = ...
+
+  # Choice of linear solver type: Default/Iterative Solver
+  set Type of Solver = Default
+
+  # Choice of using the user defined block preconditioner: Yes/No
+  set User-Defined Preconditioner = No
+
+end
+
+subsection Model Parameters
+  set Forcing Terms_1x = sin(2*t)*sin(2*t)*(cos(x[0])*sin(x[1])*sin(x[1])*sin(x[2])*sin(x[2])*(-sin(x[0]))+cos(x[1])*cos(x[1])*sin(x[0])*sin(x[2])*sin(x[2])*cos(x[0])-2*sin(x[0])*sin(x[1])*sin(x[1])*cos(x[2])*cos(x[2])*cos(x[0]))+3*nu*cos(x[0])*sin(x[0])*sin(x[2])*sin(2*t)+2*cos(x[0])*sin(x[1])*sin(x[2])*cos(2*t)+0.5*sin(2*x[0])*sin(2*t)*sin(2*t)
+  set Forcing Terms_1y = sin(2*t)*sin(2*t)*(cos(x[0])*cos(x[0])*sin(x[1])*sin(x[2])*sin(x[2])*(+cos(x[1]))+cos(x[1])*sin(x[0])*sin(x[0])*sin(x[2])*sin(x[2])*(-sin(x[1]))-2*sin(x[0])*sin(x[0])*sin(x[1])*cos(x[2])*cos(x[2])*cos(x[1]))+3*nu*cos(x[1])*sin(x[0])*sin(x[2])*sin(2*t)+2*cos(x[1])*sin(x[0])*sin(x[2])*cos(2*t)+0.5*sin(2*x[1])*sin(2*t)*sin(2*t)
+                  
+  set Forcing Terms_1z = -2*sin(2*t)*sin(2*t)*(cos(x[0])*cos(x[0])*sin(x[1])*sin(x[1])*sin(x[2])*(cos(x[2]))+cos(x[1])*cos(x[1])*sin(x[0])*sin(x[0])*sin(x[2])*(cos(x[2]))+2*sin(x[0])*sin(x[0])*sin(x[1])*sin(x[1])*cos(x[2])*sin(x[2]))-6*nu*sin(x[0])*sin(x[1])*cos(x[2])*sin(2*t)-4*sin(x[0])*sin(x[1])*cos(x[2])*cos(2*t)+0.5*sin(2*x[2])*sin(2*t)*sin(2*t)
+  set Forcing Terms_2x = 0*x[0]
+  set Forcing Terms_2y = 0*x[0]
+  set Forcing Terms_3x = 0*x[0]
+  set Forcing Terms_3y = 0*x[0]
+  set g1 Termsx =cos(x[0])*sin(x[1])*sin(x[2])*sin(2*t)
+               
+  set g1 Termsy = cos(x[1])*sin(x[0])*sin(x[2])*sin(2*t)
+  set g1 Termsz = -2*sin(x[0])*sin(x[1])*cos(x[2])*sin(2*t)
+  set g2 Termsx = 0*x[0]
+  set g2 Termsy = 0*x[0]
+  set g2 Termsz = 0*x[0]
+  set gammap = 10
+  set gammav = 10
+  # Initial condition of a pressure value [Pa]# Initial condition 
+  set Initial Condition (Pressure) = 0
+
+  # Initial condition 
+  set Initial Condition (Velocity) = 0, 0, 0
+
+  # Name of the file containing the initial condition# Initial condition 
+  set Initial Condition File Name = ...
+
+  # Enable the reading of an initial condition from file# Initial condition 
+  set Initial Condition from File (Pressure) = No
+
+  # Enable the reading of an initial condition from file# Initial condition 
+  set Initial Condition from File (Velocity) = No
+
+  # Isotropic Diffusion Tensors assumption: Yes/No
+  set Isotropic Diffusion = Yes
+
+  # Diffusion Constant of the Fluid Network 
+  set mu = 0.1
+
+  # Name of the function containing the initial condition in the file
+  set Name of IC Function in File = u0
+
+  set Steady/Unsteady = Unsteady
+end
+
+subsection Output
+  # Output file name (The relative/absolute path must be indicated!)
+  set Output XDMF File Name = ...
+
+end
+
+subsection Spatial Discretization
+  # Decide the type of spatial discretization method to apply (DG-FEM/CG-FEM)# Decide the polynomial degree of the FEM approximation
+  set Method = DG-FEM
+
+  set Polynomial Degree pressure = 1
+  set Polynomial Degree velocity = 1
+end
+
+subsection Temporal Discretization
+  # Final time of the simulation [years]
+  set Final Time = 0.001
+
+  # Periodicity of the BCs [years]
+  set Problem Periodicity = 0
+
+  # Choice of the value of the parameter theta: IE(1) - CN(0.5) - EE(0)
+  set Theta-Method Parameter = 1
+
+  # Time step of the problem [years]
+  set Time Step = 0.0001
+
+end
