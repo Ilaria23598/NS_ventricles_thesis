@@ -65,14 +65,14 @@ def parametersNS(conv):
 	prm['Domain Definition']['Type of Mesh'] = 'Built-in'
 	prm['Domain Definition']['ID for inflow'] = 1
 	prm['Domain Definition']['ID for ventricles'] = 2
-	prm['Domain Definition']['Boundary ID Function Name'] = "CellIdentityIds"
-	prm['Domain Definition']['Subdomain ID Function Name'] = "CellIdentityIds"
+	prm['Domain Definition']['Boundary ID Function Name'] = "boundaries"
+	prm['Domain Definition']['Subdomain ID Function Name'] = "subdomains"
 
 	# Definition of a built-in mesh
 	prm['Domain Definition'].add_subsection('Built-in Mesh')
 
 	prm['Domain Definition']['Built-in Mesh']['Geometry Type'] = 'Cube'
-	prm['Domain Definition']['Built-in Mesh']['Mesh Refinement'] = 20
+	prm['Domain Definition']['Built-in Mesh']['Mesh Refinement'] = 2
 
 	# Definition of a cubic mesh
 	prm['Domain Definition']['Built-in Mesh'].add_subsection('Cubic Mesh')
@@ -110,8 +110,7 @@ def parametersNS(conv):
 	prm['Model Parameters']['mu']=1
 	prm['Model Parameters']['gammav']=1.0
 	prm['Model Parameters']['gammap']=1.0
-	prm['Model Parameters']['sigmav']=1.0
-	prm['Model Parameters']['sigmap']=1.0
+	
 
 	prm['Model Parameters']['Isotropic Diffusion'] = 'Yes'
 	prm['Model Parameters']['Steady/Unsteady'] ='Unsteady'
